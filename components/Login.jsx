@@ -15,6 +15,7 @@ export default function Login() {
         }}
       />
       <View style={styles.container}>
+
         <Text
           style={{
             fontSize: 30,
@@ -25,6 +26,7 @@ export default function Login() {
         >
           Traverse
         </Text>
+
         <Text
           style={{
             fontSize: 17,
@@ -37,6 +39,7 @@ export default function Login() {
           Discover your next adventure effortlessly. Personalized Vacations at
           your fingertips. Travel smart with Traverse.
         </Text>
+        
         <TouchableOpacity
           style={styles.button}
           onPress={() => router.push("/auth/sign-in")}
