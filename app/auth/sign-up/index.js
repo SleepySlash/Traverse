@@ -14,6 +14,7 @@ import { useRouter } from "expo-router";
 import { useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { auth } from "./../../../configs/FirebaseConfiguration";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function SignUp() {
   const router = useRouter();
@@ -27,8 +28,8 @@ export default function SignUp() {
   const [fullName, setFullName] = useState("");
 
   const OnCreateAccount = () => {
-    if (email?.length < 4 || fullName?.length < 2 || password?.length > 3) {
-      ToastAndroid.show("Please enter valid details", ToastAndroid.BOTTOM);
+    if (email?.length < 4 || fullName?.length < 2 || password?.length < 3) {
+      ToastAndroid.show("Please enter valid details", ToastAndroid.LONG);
       return;
     }
 
@@ -36,6 +37,9 @@ export default function SignUp() {
       .then((userCredential) => {
         // Signed up
         const user = userCredential.user;
+        // console.log(user);
+        router.replace("/mytrip");
+
         // ...
       })
       .catch((error) => {

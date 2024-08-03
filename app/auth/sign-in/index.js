@@ -6,20 +6,46 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  ToastAndroid,
 } from "react-native";
 import { Colors } from "@/constants/Colors";
 import { useNavigation } from "expo-router";
 import { useRouter } from "expo-router";
 import { useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "./../../../configs/FirebaseConfiguration";
+import { useState } from "react";
 
 export default function SignIn() {
   const router = useRouter();
 
   const navigation = useNavigation();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, []);
+
+  const onSignIn = () => {
+    if (email?.length < 4 || password?.length < 3) {
+      ToastAndroid.show("Please enter valid details", ToastAndroid.LONG);
+      return;
+    }
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        // console.log("logging in ", user);
+        router.replace("/mytrip");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
+  };
 
   return (
     <View
@@ -63,7 +89,12 @@ export default function SignIn() {
         >
           Email
         </Text>
-        <TextInput style={styles.input} placeholder="Enter your Email" />
+
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your Email"
+          onChangeText={(text) => setEmail(text)}
+        />
       </View>
       <View style={{ marginTop: 40 }}>
         <Text
@@ -79,10 +110,11 @@ export default function SignIn() {
           style={styles.input}
           secureTextEntry={true}
           placeholder="Enter your password"
+          onChangeText={(text) => setPassword(text)}
         />
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={() => router.replace()}>
+      <TouchableOpacity style={styles.button} onPress={onSignIn}>
         <Text
           style={{
             color: Colors.WHITE,
