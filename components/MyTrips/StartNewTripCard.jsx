@@ -3,8 +3,11 @@ import React from "react";
 import { Colors } from "@/constants/Colors";
 import Entypo from "@expo/vector-icons/Entypo";
 import { TouchableOpacity } from "react-native";
+import { router, useRouter } from "expo-router";
 
 function StartNewTripCard() {
+  const router = useRouter();
+  
   return (
     <View
       style={{
@@ -35,7 +38,7 @@ function StartNewTripCard() {
           color: Colors.TEXT,
         }}
       >
-        Let's plan a new trip! Less GOO!
+        Let's plan a new trip! Less Goo!
       </Text>
       <TouchableOpacity
         style={{
@@ -45,6 +48,7 @@ function StartNewTripCard() {
           height: 50,
           justifyContent: "center",
         }}
+        onPress={() => router.push("/create-trip/search-place")}
       >
         <Text
           style={{ fontFamily: "o-medium", fontSize: 17, color: Colors.WHITE }}
