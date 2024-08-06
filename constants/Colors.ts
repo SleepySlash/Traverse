@@ -15,7 +15,10 @@ export const Colors = {
   CYAN_GREEN: "#44B3AC",
   GOLD: "#FEB952",
   GOLD_L: "#FCCE69",
+  CARD: "#2D9596",
+  TEXT1: "#C5FF95",
   TEXT: "#225E68",
+  TITLE: "#DEF9C4",
   light: {
     text: "#11181C",
     background: "#fff",
