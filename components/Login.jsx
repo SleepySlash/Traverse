@@ -15,12 +15,12 @@ export default function Login() {
         }}
       />
       <View style={styles.container}>
-
         <Text
           style={{
             fontSize: 30,
             fontFamily: "o-bold",
             textAlign: "center",
+            color: Colors.PRIMARY,
             marginTop: 10,
           }}
         >
@@ -32,14 +32,14 @@ export default function Login() {
             fontSize: 17,
             fontFamily: "o-regular",
             textAlign: "center",
-            color: Colors.GRAY,
+            color: Colors.TEXT,
             marginTop: 15,
           }}
         >
           Discover your next adventure effortlessly. Personalized Vacations at
           your fingertips. Travel smart with Traverse.
         </Text>
-        
+
         <TouchableOpacity
           style={styles.button}
           onPress={() => router.push("/auth/sign-in")}

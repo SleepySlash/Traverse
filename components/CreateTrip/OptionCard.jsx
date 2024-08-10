@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { Colors } from "@/constants/Colors";
-export const OptionsCard = ({ option, selectedTraveler }) => (
+export const OptionsCard = ({ option, selectedTraveler, selectedBudget }) => (
   <View
     style={[
       {
@@ -14,6 +14,10 @@ export const OptionsCard = ({ option, selectedTraveler }) => (
         borderRadius: 10,
       },
       selectedTraveler?.id === option?.id && {
+        borderWidth: 2,
+        borderColor: Colors.TITLE,
+      },
+      selectedBudget?.id === option?.id && {
         borderWidth: 2,
         borderColor: Colors.TITLE,
       },
