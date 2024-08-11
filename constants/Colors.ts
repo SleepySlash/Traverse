@@ -8,6 +8,15 @@ const tintColorDark = "#fff";
 
 export const Colors = {
   PRIMARY: "#267A7A",
+  BLACK: "#000",
+  BG: "#A7D5C9",
+  BG1: "#006579",
+  BG2: "#B9F9E4",
+  BG3: "#A7D6CA",
+  TG1: "#7FF9F8",
+  TG2: "#433848",
+  TG3: "#03A8E5",
+  TG4: "#002F60",
   ICON: "#1A4A5A",
   WHITE: "#fff",
   GRAY: "#7d7d7d",
