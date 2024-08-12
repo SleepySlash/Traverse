@@ -1,24 +1,29 @@
 // Styles for Car Version of loading screen
 import { View, Text, FlatList, TouchableOpacity, Image } from "react-native";
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useRef } from "react";
 import { useRouter } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { CreateTripContext } from "@/context/CreateTripContext";
 import { AI_PROMPT } from "../../constants/Options";
 import { chatSession } from "../../configs/AIModel";
-
+import { auth, db } from "../../configs/FirebaseConfiguration";
+import { setDoc, doc } from "firebase/firestore";
 export default function GenerateTrip() {
   const { tripData, setTripData } = useContext(CreateTripContext);
   const router = useRouter();
+  const user = auth.currentUser;
 
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    tripData && GenerateAiTrip();
-  }, [tripData]);
+  const hasGenerated = useRef(false); // Ref to prevent multiple calls
 
   const GenerateAiTrip = async () => {
+    if (hasGenerated.current || !tripData || loading) {
+      return;
+    }
+
     setLoading(true);
+    hasGenerated.current = true; // Mark as executed
+
     const FINAL_PROMPT = AI_PROMPT.replace(
       "{location}",
       tripData?.locationInfo?.name
@@ -27,12 +32,33 @@ export default function GenerateTrip() {
       .replaceAll("{totalNights}", tripData?.days - 1)
       .replace("{travellers}", tripData?.traveler)
       .replace("{budget}", tripData?.budget);
+
     // console.log(FINAL_PROMPT);
-    // const result = await chatSession.sendMessage(FINAL_PROMPT);
-    // console.log(result.response.text());
-    // setLoading(false);
-    router.push("/mytrip");
+
+    try {
+      const result = await chatSession.sendMessage(FINAL_PROMPT);
+      const tripResponse = await result.response.text();
+      const docId = Date.now().toString();
+
+      await setDoc(doc(db, "UserTrips", docId), {
+        userEmail: user.email,
+        tripPlan: tripResponse,
+        tripData: tripData,
+      });
+
+      router.push("/mytrip");
+    } catch (error) {
+      console.error("Error generating AI trip:", error);
+    } finally {
+      setLoading(false);
+      hasGenerated.current = false; // Reset ref for future use
+    }
   };
+
+  // Trigger trip generation when the component mounts
+  if (!hasGenerated.current && tripData) {
+    GenerateAiTrip();
+  }
 
   return (
     <View
