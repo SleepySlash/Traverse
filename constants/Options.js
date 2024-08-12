@@ -49,3 +49,6 @@ export const SelectBudgetList = [
     icon: "💸",
   },
 ];
+
+export const AI_PROMPT =
+  "Please generate a detailed and realistic travel tour for the following specifications (make sure the costs are estimated in the destination's currency): location {location}, duration {totalDays} days and {totalNights} nights, for {travellers} travelers, and a budget of {budget}. The itinerary should include the best travel routes based on the mode of transportation (flight, train, bus, or ship), with ticket prices and booking URLs provided. Additionally, include a list of recommended hotels or lodging options with their names, prices, and booking URLs. For places to visit nearby, provide a comprehensive list that includes the name of each place, a detailed description, an image URL, geo coordinates, ticket pricing, estimated travel time from the accommodation, and the best time to visit. Ensure all this information is presented in a structured JSON format.";

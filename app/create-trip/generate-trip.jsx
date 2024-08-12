@@ -1,16 +1,45 @@
+// Styles for Car Version of loading screen
 import { View, Text, FlatList, TouchableOpacity, Image } from "react-native";
 import React, { useEffect, useContext, useState } from "react";
 import { useRouter } from "expo-router";
 import { Colors } from "@/constants/Colors";
+import { CreateTripContext } from "@/context/CreateTripContext";
+import { AI_PROMPT } from "../../constants/Options";
+import { chatSession } from "../../configs/AIModel";
 
 export default function GenerateTrip() {
+  const { tripData, setTripData } = useContext(CreateTripContext);
   const router = useRouter();
+
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    tripData && GenerateAiTrip();
+  }, [tripData]);
+
+  const GenerateAiTrip = async () => {
+    setLoading(true);
+    const FINAL_PROMPT = AI_PROMPT.replace(
+      "{location}",
+      tripData?.locationInfo?.name
+    )
+      .replaceAll("{totalDays}", tripData?.days)
+      .replaceAll("{totalNights}", tripData?.days - 1)
+      .replace("{travellers}", tripData?.traveler)
+      .replace("{budget}", tripData?.budget);
+    // console.log(FINAL_PROMPT);
+    // const result = await chatSession.sendMessage(FINAL_PROMPT);
+    // console.log(result.response.text());
+    // setLoading(false);
+    router.push("/mytrip");
+  };
+
   return (
     <View
       style={{
         padding: 25,
         paddingTop: 80,
-        backgroundColor: Colors.BG3,
+        backgroundColor: Colors.BG2,
         height: "100%",
       }}
     >
@@ -31,73 +60,24 @@ export default function GenerateTrip() {
           fontSize: 20,
           textAlign: "center",
           marginTop: 40,
-          color: Colors.TG2,
+          color: Colors.ICON,
         }}
       >
-        while we are generating your trip
+        we are generating your trip
       </Text>
       <Image
         style={{
-          width: "100%",
-          height: 200,
-          marginTop: "30%",
+          width: "120%",
+          height: 300,
+          marginTop: "80%",
+          right: "-5%",
+          position: "absolute",
         }}
-        source={require("./../../assets/images/hillss.gif")}
+        source={require("./../../assets/images/car.gif")}
       />
     </View>
   );
 }
-
-// Styles for Car Version of loading screen
-// import { View, Text, FlatList, TouchableOpacity, Image } from "react-native";
-// import React, { useEffect, useContext, useState } from "react";
-// import { useRouter } from "expo-router";
-// import { Colors } from "@/constants/Colors";
-
-// export default function GenerateTrip() {
-//   const router = useRouter();
-//   return (
-//     <View
-//       style={{
-//         padding: 25,
-//         paddingTop: 80,
-//         backgroundColor: Colors.BG2,
-//         height: "100%",
-//       }}
-//     >
-//       <Text
-//         style={{
-//           fontFamily: "o-bold",
-//           fontSize: 35,
-//           textAlign: "center",
-//           marginTop: 14,
-//           color: Colors.TEXT,
-//         }}
-//       >
-//         Please Wait
-//       </Text>
-//       <Text
-//         style={{
-//           fontFamily: "o-regular",
-//           fontSize: 20,
-//           textAlign: "center",
-//           marginTop: 40,
-//           color: Colors.ICON,
-//         }}
-//       >
-//         we are generating your trip
-//       </Text>
-//       <Image
-//         style={{
-//           width: "100%",
-//           height: 200,
-//           marginTop: "30%",
-//         }}
-//         source={require("./../../assets/images/car.gif")}
-//       />
-//     </View>
-//   );
-// }
 
 // Styles for Boat Version of loading screen
 // import { View, Text, FlatList, TouchableOpacity, Image } from "react-native";
@@ -121,7 +101,7 @@ export default function GenerateTrip() {
 //           fontFamily: "o-bold",
 //           fontSize: 35,
 //           textAlign: "center",
-//           marginTop: 14,
+//           marginTop: 54,
 //           color: Colors.TG1,
 //         }}
 //       >
@@ -132,7 +112,7 @@ export default function GenerateTrip() {
 //           fontFamily: "o-regular",
 //           fontSize: 20,
 //           textAlign: "center",
-//           marginTop: 40,
+//           marginTop: 14,
 //           color: Colors.TG1,
 //         }}
 //       >
@@ -141,7 +121,7 @@ export default function GenerateTrip() {
 //       <Image
 //         style={{
 //           width: "100%",
-//           height: 200,
+//           height: 300,
 //           marginTop: "30%",
 //         }}
 //         source={require("./../../assets/images/fishing-boat.gif")}
@@ -246,7 +226,7 @@ export default function GenerateTrip() {
 //           height: 200,
 //           marginTop: "30%",
 //         }}
-//         source={require("./../../assets/images/loading2.gif")}
+//         source={require("./../../assets/images/loading1.gif")}
 //       />
 //     </View>
 //   );
