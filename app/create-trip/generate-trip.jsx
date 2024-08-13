@@ -33,11 +33,11 @@ export default function GenerateTrip() {
       .replace("{travellers}", tripData?.traveler)
       .replace("{budget}", tripData?.budget);
 
-    // console.log(FINAL_PROMPT);
+    console.log(FINAL_PROMPT);
 
     try {
       const result = await chatSession.sendMessage(FINAL_PROMPT);
-      const tripResponse = await result.response.text();
+      const tripResponse = await JSON.parse(result.response.text());
       const docId = Date.now().toString();
 
       await setDoc(doc(db, "UserTrips", docId), {

@@ -1,12 +1,35 @@
-import { View, Text } from "react-native";
-import React from "react";
+import { View, Text, ActivityIndicator } from "react-native";
+import React, { useEffect } from "react";
 import { Colors } from "@/constants/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useState } from "react";
+import { auth, db } from "../../configs/FirebaseConfiguration";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import StartNewTripCard from "../../components/MyTrips/StartNewTripCard";
+import UserTripList from "../../components/MyTrips/UserTripList";
 
 function MyTrip() {
   const [userTrips, setUserTrips] = useState([]);
+  const user = auth.currentUser;
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    user && GetMyTrips();
+  }, [user]);
+
+  const GetMyTrips = async () => {
+    setLoading(true);
+    const q = query(
+      collection(db, "UserTrips"),
+      where("userEmail", "==", user?.email)
+    );
+
+    const querySnapShot = await getDocs(q);
+    querySnapShot.forEach((doc) => {
+      setUserTrips((prev) => [...prev, doc.data()]);
+      // console.log(doc.id, "=>", doc.data());
+    });
+    setLoading(false);
+  };
 
   return (
     <View
@@ -32,9 +55,13 @@ function MyTrip() {
         </Text>
         <Ionicons name="add-circle-sharp" size={30} color={Colors.ICON} />
       </View>
-
-      {userTrips?.length == 0 ? <StartNewTripCard /> : null}
-    </View> 
+      {loading && <ActivityIndicator size={"large"} color={Colors.CARD} />}
+      {userTrips?.length == 0 ? (
+        <StartNewTripCard />
+      ) : (
+        <UserTripList userTrips={userTrips} />
+      )}
+    </View>
   );
 }
 
