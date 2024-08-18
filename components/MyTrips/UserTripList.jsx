@@ -5,29 +5,34 @@ import moment from "moment";
 import UserTripCard from "./UserTripCard";
 
 export default function UserTripList({ userTrips }) {
-  const LatestTrip = userTrips[0].tripData;
+  const LatestTrip = userTrips[userTrips.length - 1].tripData;
+  const otherTrips = JSON.parse(JSON.stringify(userTrips));
+  otherTrips.pop();
+  console.log("altest wala trip ", LatestTrip);
 
   return (
     <View>
-      <View>
+      <View style={{ marginTop: 14 }}>
         <Image
-          source={require("../../assets/images/gif1.gif")}
+          source={{ uri: LatestTrip?.image }}
           style={{
             width: "100%",
             height: 230,
             objectFit: "cover",
+            borderRadius: 12,
           }}
         />
       </View>
-      <View>
+      <View style={{ borderRadius: 10 }}>
         <Text
           style={{
             fontFamily: "o-medium",
-            fontSize: 24,
+            fontSize: 22,
             color: Colors.TEXT,
+            paddingTop: 25,
           }}
         >
-          {userTrips[0]?.tripData?.locationInfo?.name}
+          {LatestTrip?.locationInfo?.name}
         </Text>
         <View
           style={{
@@ -75,7 +80,7 @@ export default function UserTripList({ userTrips }) {
           </Text>
         </TouchableOpacity>
         {/* Render all trips */}
-        {userTrips.map((trip, index) => (
+        {otherTrips.map((trip, index) => (
           <View>
             {console.log(trip)}
 

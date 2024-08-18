@@ -5,13 +5,29 @@ import { Colors } from "@/constants/Colors";
 import { OptionsCard } from "../../components/CreateTrip/OptionCard";
 import { SelectTravelsList } from "../../constants/Options";
 import { CreateTripContext } from "@/context/CreateTripContext";
+import axios from "axios";
 
 export default function SelectTraveler() {
   const router = useRouter();
   const navigation = useNavigation();
   const [selectedTraveler, setSelectedTraveler] = useState();
+  const [img, setImg] = useState();
 
   const { tripData, setTripData } = useContext(CreateTripContext);
+  console.log(tripData);
+
+  const fetchRequest = async () => {
+    try {
+      const apiKey = "E1jFg0QuPL8hB-ezecGjglBn6hFRpq1c9kHmwYfeS9o";
+      let resp = await axios.get(
+        `https://api.unsplash.com/search/photos?client_id=${apiKey}&query=${tripData.locationInfo.name}&per_page=3`
+      );
+      console.log(21, resp.data.results);
+      setImg(resp.data.results[2].urls.small);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   useEffect(() => {
     navigation.setOptions({
@@ -23,9 +39,11 @@ export default function SelectTraveler() {
   }, []);
 
   useEffect(() => {
+    fetchRequest();
     setTripData({
       ...tripData,
       traveler: selectedTraveler?.title,
+      image: img?.toString(),
     });
   }, [selectedTraveler]);
 

@@ -1,4 +1,4 @@
-import { View, Text, ActivityIndicator } from "react-native";
+import { View, Text, ActivityIndicator, ScrollView } from "react-native";
 import React, { useEffect } from "react";
 import { Colors } from "@/constants/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -7,8 +7,10 @@ import { auth, db } from "../../configs/FirebaseConfiguration";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import StartNewTripCard from "../../components/MyTrips/StartNewTripCard";
 import UserTripList from "../../components/MyTrips/UserTripList";
+import { useRouter } from "expo-router";
 
 function MyTrip() {
+  const router = useRouter();
   const [userTrips, setUserTrips] = useState([]);
   const user = auth.currentUser;
   const [loading, setLoading] = useState(true);
@@ -32,7 +34,7 @@ function MyTrip() {
   };
 
   return (
-    <View
+    <ScrollView
       style={{
         paddingHorizontal: 25,
         paddingTop: 55,
@@ -53,6 +55,7 @@ function MyTrip() {
         >
           My Trips
         </Text>
+
         <Ionicons name="add-circle-sharp" size={30} color={Colors.ICON} />
       </View>
       {loading && <ActivityIndicator size={"large"} color={Colors.CARD} />}
@@ -61,7 +64,7 @@ function MyTrip() {
       ) : (
         <UserTripList userTrips={userTrips} />
       )}
-    </View>
+    </ScrollView>
   );
 }
 

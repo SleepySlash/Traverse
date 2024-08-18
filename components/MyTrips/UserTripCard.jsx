@@ -6,22 +6,28 @@ import moment from "moment";
 export default function UserTripCard({ trip }) {
   // Check if tripPlan is a string (JSON) or an object
   const tripPlan = trip?.tripPlan;
-  console.log(trip.tripPlan.tour.itinerary);
+  console.log("log imgaw", trip);
+
+  // console.log(trip.tripPlan.tour.itinerary);
 
   return (
     <View
       style={{
         marginTop: 20,
-        padding: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 7,
         backgroundColor: "#f9f9f9",
         borderRadius: 10,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-around",
       }}
     >
       <Image
-        source={require("../../assets/images/login.jpeg")}
+        source={{ uri: trip?.tripData?.image }}
         style={{
-          width: 100,
-          height: 100,
+          width: "45%",
+          height: "105%",
           borderRadius: 10,
           marginBottom: 10,
         }}
@@ -30,7 +36,7 @@ export default function UserTripCard({ trip }) {
         <Text
           style={{
             fontFamily: "o-medium",
-            fontSize: 20,
+            fontSize: 17,
             color: Colors.TEXT,
           }}
         >
@@ -39,7 +45,7 @@ export default function UserTripCard({ trip }) {
         <Text
           style={{
             fontFamily: "o-regular",
-            fontSize: 16,
+            fontSize: 14,
             color: Colors.TEXT,
           }}
         >
@@ -50,16 +56,16 @@ export default function UserTripCard({ trip }) {
         <Text
           style={{
             fontFamily: "o-regular",
-            fontSize: 16,
+            fontSize: 14,
             color: Colors.TEXT,
           }}
         >
-          Travelers: {tripPlan?.tour?.travelerType}
+          Travellers: {tripPlan?.tour?.travelerType}
         </Text>
         <Text
           style={{
             fontFamily: "o-regular",
-            fontSize: 16,
+            fontSize: 14,
             color: Colors.TEXT,
           }}
         >
@@ -68,7 +74,7 @@ export default function UserTripCard({ trip }) {
         <Text
           style={{
             fontFamily: "o-regular",
-            fontSize: 16,
+            fontSize: 14,
             color: Colors.TEXT,
           }}
         >
