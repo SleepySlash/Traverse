@@ -34,7 +34,7 @@ function MyTrip() {
   };
 
   return (
-    <ScrollView
+    <View
       style={{
         paddingHorizontal: 25,
         paddingTop: 55,
@@ -64,7 +64,7 @@ function MyTrip() {
       ) : (
         <UserTripList userTrips={userTrips} />
       )}
-    </ScrollView>
+    </View>
   );
 }
 

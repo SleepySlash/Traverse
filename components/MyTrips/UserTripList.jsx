@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
 import React from "react";
 import { Colors } from "@/constants/Colors";
 import moment from "moment";
@@ -11,7 +11,7 @@ export default function UserTripList({ userTrips }) {
   console.log("altest wala trip ", LatestTrip);
 
   return (
-    <View>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <View style={{ marginTop: 14 }}>
         <Image
           source={{ uri: LatestTrip?.image }}
@@ -81,7 +81,7 @@ export default function UserTripList({ userTrips }) {
         </TouchableOpacity>
         {/* Render all trips */}
         {otherTrips.map((trip, index) => (
-          <View>
+          <ScrollView>
             {console.log(trip)}
 
             <UserTripCard
@@ -89,9 +89,9 @@ export default function UserTripList({ userTrips }) {
               key={index}
               style={{ marginTop: 20 }}
             />
-          </View>
+          </ScrollView>
         ))}
       </View>
-    </View>
+    </ScrollView>
   );
 }
