@@ -14,8 +14,8 @@ export default function UserTripCard({ trip }) {
     <View
       style={{
         marginTop: 20,
-        paddingVertical: 10,
-        paddingHorizontal: 7,
+        // paddingVertical: 10,
+        // paddingHorizontal: 7,
         backgroundColor: "#f9f9f9",
         borderRadius: 10,
         display: "flex",

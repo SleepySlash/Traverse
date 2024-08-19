@@ -17,13 +17,17 @@ export default function SelectTraveler() {
   console.log(tripData);
 
   const fetchRequest = async () => {
+    const place = tripData.locationInfo.name.split(" ");
+    const placeName = place[0];
+    console.log(placeName.split(",")[0]);
+
     try {
       const apiKey = "E1jFg0QuPL8hB-ezecGjglBn6hFRpq1c9kHmwYfeS9o";
       let resp = await axios.get(
-        `https://api.unsplash.com/search/photos?client_id=${apiKey}&query=${tripData.locationInfo.name}&per_page=3`
+        `https://api.unsplash.com/search/photos?client_id=${apiKey}&query=${placeName}&per_page=30`
       );
-      console.log(21, resp.data.results);
-      setImg(resp.data.results[2].urls.small);
+      // console.log(21, resp.data.results);
+      setImg(resp.data.results[3].urls.small);
     } catch (e) {
       console.log(e);
     }
