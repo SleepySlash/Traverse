@@ -16,13 +16,11 @@ export default function UserTripCard({ trip }) {
       <View
         style={{
           marginTop: 20,
-          paddingVertical: 3,
           backgroundColor: "#f9f9f9",
           borderRadius: 10,
           display: "flex",
           flexDirection: "row",
           gap: 25,
-          paddingHorizontal: 5,
           height: 110,
         }}
       >

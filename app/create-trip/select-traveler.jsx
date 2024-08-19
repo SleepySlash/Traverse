@@ -18,7 +18,7 @@ export default function SelectTraveler() {
 
   const fetchRequest = async () => {
     const place = tripData.locationInfo.name.split(" ");
-    const placeName = place[0];
+    const placeName = place[0].trim();
     console.log(placeName.split(",")[0]);
 
     try {
