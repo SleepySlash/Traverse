@@ -6,7 +6,7 @@ import moment from "moment";
 export default function UserTripCard({ trip }) {
   // Check if tripPlan is a string (JSON) or an object
   const tripPlan = trip?.tripPlan;
-  console.log("log imgaw", trip);
+  // console.log("log image", trip);
   const loactionName = tripPlan?.tour?.destination;
   const location = loactionName.split(",")[0];
   // console.log(trip.tripPlan.tour.itinerary);

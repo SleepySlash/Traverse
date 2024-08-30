@@ -21,7 +21,7 @@ function SearchPlace() {
   }, []);
 
   useEffect(() => {
-    console.log(tripData);
+    // console.log(tripData);
   }, [tripData]);
 
   return (

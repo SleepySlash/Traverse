@@ -3,12 +3,21 @@ import React from "react";
 import { Colors } from "@/constants/Colors";
 import moment from "moment";
 import UserTripCard from "./UserTripCard";
+import { useRouter } from "expo-router";
 
 export default function UserTripList({ userTrips }) {
+  const router = useRouter();
   const LatestTrip = userTrips[userTrips.length - 1].tripData;
+  const theTrip = userTrips[userTrips.length - 1];
+  const tour = theTrip.tripPlan.tour;
+  const itinerary = tour.itinerary;
+  const lodging = itinerary.lodging;
+  console.log("the trip iteinerary", itinerary);
+  console.log("lodging : ", lodging);
+
   const otherTrips = JSON.parse(JSON.stringify(userTrips));
   otherTrips.pop();
-  console.log("altest wala trip ", LatestTrip);
+  // console.log("altest wala trip ", LatestTrip);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -61,6 +70,16 @@ export default function UserTripList({ userTrips }) {
           </Text>
         </View>
         <TouchableOpacity
+          onPress={() =>
+            router.push({
+              pathname: "/trip-details",
+              params: {
+                trip: JSON.stringify(LatestTrip),
+                lodging: JSON.stringify(lodging),
+                travelplan: JSON.stringify(itinerary),
+              },
+            })
+          }
           style={{
             padding: 15,
             borderRadius: 15,
@@ -82,8 +101,6 @@ export default function UserTripList({ userTrips }) {
         {/* Render all trips */}
         {otherTrips.map((trip, index) => (
           <ScrollView>
-            {console.log(trip)}
-
             <UserTripCard
               trip={trip} // Pass the individual trip
               key={index}

@@ -14,12 +14,12 @@ export default function SelectTraveler() {
   const [img, setImg] = useState();
 
   const { tripData, setTripData } = useContext(CreateTripContext);
-  console.log(tripData);
+  // console.log(tripData);
 
   const fetchRequest = async () => {
     const place = tripData.locationInfo.name.split(" ");
     const placeName = place[0].trim();
-    console.log(placeName.split(",")[0]);
+    // console.log(placeName.split(",")[0]);
 
     try {
       const apiKey = "E1jFg0QuPL8hB-ezecGjglBn6hFRpq1c9kHmwYfeS9o";
