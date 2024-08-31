@@ -1,8 +1,8 @@
-import { View, Text, Image, ScrollView } from "react-native";
+import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
 import React from "react";
 import { Colors } from "@/constants/Colors";
 import moment from "moment";
-
+import { useRouter } from "expo-router";
 export default function UserTripCard({ trip }) {
   // Check if tripPlan is a string (JSON) or an object
   const tripPlan = trip?.tripPlan;
@@ -10,9 +10,25 @@ export default function UserTripCard({ trip }) {
   const loactionName = tripPlan?.tour?.destination;
   const location = loactionName.split(",")[0];
   // console.log(trip.tripPlan.tour.itinerary);
+  const LatestTrip = trip.tripData;
+  const tour = trip.tripPlan.tour;
+  const itinerary = tour.itinerary;
+  const lodging = itinerary.lodging;
+  const router = useRouter();
 
   return (
-    <View>
+    <TouchableOpacity
+      onPress={() =>
+        router.push({
+          pathname: "/trip-details",
+          params: {
+            trip: JSON.stringify(LatestTrip),
+            lodging: JSON.stringify(lodging),
+            travelplan: JSON.stringify(itinerary),
+          },
+        })
+      }
+    >
       <View
         style={{
           marginTop: 20,
@@ -84,6 +100,6 @@ export default function UserTripCard({ trip }) {
           </Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }

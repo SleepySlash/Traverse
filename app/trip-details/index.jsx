@@ -2,8 +2,10 @@ import { View, Text, Image, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Colors } from "@/constants/Colors";
 import moment from "moment";
-import { useLocalSearchParams, useNavigation } from "expo-router";
+import { useNavigation } from "expo-router";
 import { useRoute } from "@react-navigation/native";
+import LodgingDetails from "./Lodging";
+import TravelDetails from "./TripDay";
 
 export default function TripDetails() {
   const navigation = useNavigation();
@@ -25,7 +27,7 @@ export default function TripDetails() {
     setTravelPlan(JSON.parse(travelplan));
   }, []);
   return (
-    <View style={{ marginTop: 14 }}>
+    <ScrollView style={{ marginTop: 14 }}>
       <Image
         source={{ uri: TripDetails?.image }}
         style={{
@@ -57,7 +59,6 @@ export default function TripDetails() {
             }}
           >
             {moment(TripDetails?.startDate).format("DD MMM YYYY")}
-            {console.log("trip details ", TripDetails)}
           </Text>
           <Text
             style={{
@@ -87,56 +88,13 @@ export default function TripDetails() {
         >
           {TripDetails?.traveler}
         </Text>
-        <Text
-          style={{
-            color: Colors.TEXT,
-            fontSize: 24,
-            fontFamily: "o-bold",
-            marginTop: 15,
-          }}
-        >
-          Lodging
-        </Text>
-        <View style={{ marginTop: 7 }}>
-          <Text
-            style={{
-              color: Colors.TEXT,
-              fontSize: 20,
-              fontFamily: "o-bold",
-            }}
-          >
-            Name :
-            <Text
-              style={{
-                color: Colors.TEXT,
-                fontSize: 20,
-                fontFamily: "o-regular",
-              }}
-            >
-              {" " + Lodging?.name}
-            </Text>
-          </Text>
 
-          <Text
-            style={{
-              color: Colors.TEXT,
-              fontSize: 20,
-              fontFamily: "o-bold",
-            }}
-          >
-            Description :{"  "}
-            <Text
-              style={{
-                color: Colors.TEXT,
-                fontSize: 20,
-                fontFamily: "o-regular",
-              }}
-            >
-              {Lodging?.description}
-            </Text>
-          </Text>
-        </View>
+        {/* Lodging */}
+        {Lodging && <LodgingDetails details={Lodging} />}
+
+        {/* Trip Day(s) Plan */}
+        <TravelDetails details={TravelPlan} />
       </View>
-    </View>
+    </ScrollView>
   );
 }

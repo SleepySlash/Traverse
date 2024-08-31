@@ -1,4 +1,4 @@
-import { View, Text, ActivityIndicator, ScrollView } from "react-native";
+import { View, Text, ActivityIndicator, TouchableOpacity } from "react-native";
 import React, { useEffect } from "react";
 import { Colors } from "@/constants/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -55,8 +55,11 @@ function MyTrip() {
         >
           My Trips
         </Text>
-
-        <Ionicons name="add-circle-sharp" size={30} color={Colors.ICON} />
+        <TouchableOpacity
+          onPress={() => router.push("/create-trip/search-place")}
+        >
+          <Ionicons name="add-circle-sharp" size={30} color={Colors.ICON} />
+        </TouchableOpacity>
       </View>
       {loading && <ActivityIndicator size={"large"} color={Colors.CARD} />}
       {userTrips?.length == 0 ? (
